@@ -78,6 +78,7 @@ public:
     //friend class iterator;
     //Джон Лакош: реализация паттерна Iterator на "интуитивных" операторах.
     class iterator{
+    public://гавнокод гавнокод гавнокод гавнокод ¦̵̱ ̵̱ ̵̱ ̵̱ ̵̱(̢ ̡͇̅└͇̅┘͇̅ (▤8כ−◦ private снято для вставки
         Node * _current;
     public:
         iterator(Node *p) throw():_current(p){}
@@ -93,6 +94,12 @@ public:
             operator++();
             return temp;
         }
+//        iterator operator++(int) const{
+//            // RAII(захват ресурса есть инициализация)
+//            iterator temp(*this);
+//            operator++();
+//            return temp;
+//        }
         value_type & operator*()throw(){ return _current->_val; }
         value_type operator*() const{ return _current->_val; }
         value_type operator->(){ return _current->_val; }
@@ -123,17 +130,27 @@ public:
     //        ++_nelems;
     //        return pos++;
     //    }
-    //гавнокод гавнокод гавнокод гавнокод ¦̵̱ ̵̱ ̵̱ ̵̱ ̵̱(̢ ̡͇̅└͇̅┘͇̅ (▤8כ−◦
-        bool insert(reference find_value, const_reference value){
-            for (iterator & b = begin(); b != end(); b++) {
-                if (*b == find_value) {
-                    b.setnext();
-
-                    return true;
-                }
+    //¦̵̱ ̵̱ ̵̱ ̵̱ ̵̱(̢ ̡͇̅└͇̅┘͇̅ (▤8כ−◦ Вопрос о безопасности вставки?
+    bool insert(const_reference find_value, const_reference value){
+        for (iterator b = begin(); b != end(); b++) {
+            if (*b == find_value) {
+                b._current->insert_after(value);
+                return true;
             }
-            return false;
         }
+        return false;
+    }
+    //¦̵̱ ̵̱ ̵̱ ̵̱ ̵̱(̢ ̡͇̅└͇̅┘͇̅ (▤8כ−◦ Получается мы копируем 2 значения?
+    bool insert_before( const_reference find_value, const_reference value ){
+        for (iterator b = begin(); b != end(); b++) {
+            if (*b == find_value) {
+                b._current->insert_after(b._current->_val);
+                b._current->_val = value;
+                return true;
+            }
+        }
+        return false;
+    }
     //гавнокод гавнокод гавнокод гавнокод ¦̵̱ ̵̱ ̵̱ ̵̱ ̵̱(̢ ̡͇̅└͇̅┘͇̅ (▤8כ−◦
     //    iterator insert_after( const_iterator pos, const_reference value ){
     //        if (pos != end()) pos++;
@@ -142,7 +159,7 @@ public:
     //    }
     //гавнокод гавнокод гавнокод гавнокод ¦̵̱ ̵̱ ̵̱ ̵̱ ̵̱(̢ ̡͇̅└͇̅┘͇̅ (▤8כ−◦
     //    iterator insert_before( const_iterator pos, const_reference value ){
-    //        const_iterator & b = begin();
+    //        iterator & b = begin();
     //        const_iterator & before_pos;
     //        while ((b != pos)&&(b != end())){
     //            before_pos=b;
