@@ -6,5 +6,9 @@ CONFIG -= qt
 SOURCES += main.cpp
 
 HEADERS += \
-    forward_list.h
+    forward_list.h \
+    ll.h \
+    lisst.h \
+    cqueue.h \
+    treenode.h
 
