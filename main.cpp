@@ -3,7 +3,7 @@
 #include "lisst.h"
 #include <list>
 #include "cqueue.h"
-//#include "treenode.h"
+#include "treenode.h"
 using namespace std;
 
 typedef forward_list<int> int_fw_list;
@@ -131,39 +131,77 @@ int main()
         case 4:
         {
             cout << endl<< "LAB4!" << endl;
-//            struct tnode *root;
+            struct tnode *root;
 
-//              char word[MAXWORD];
-//              root = NULL;
-//              cout<< "WORDS = 0 go end"<< endl;
-//              cout<< "in: WORDS = ";
-//              do {
-//                inf *info;
-//                scanf("%s",word);
-//                info->Fam = word;
-//                cout << endl<< "out:  info->Fam = "<<info->Fam;
-//                cout << endl<< "out:  word = "<<word;
-//                if(word[0])
-//                  root = addtree(root, info);
-//              }while(word[0]!='0');    // условие выхода – ввод символа ‘0’
-//              cout << endl<< "out:  treeprint = "<< endl;
-//              treeprint(root);
-//              cout << endl<< "out:  treeprint_POSTFIX(LPK) = ";
-//              treeprint_POSTFIX(root);
-//              cout << endl<< "out:  treeprint_INFIX(LKP) = ";
-//              treeprint_INFIX(root);
-//              cout << endl<< "out:  treeprint_PREFIX(KLP) = ";
-//              treeprint_PREFIX(root);
-//              if(find(root,"q")) {
-//              cout <<endl<< "out:  find = "<<find(root,"q")->pers->Fam;
-//              }else {
-//                cout <<endl<< "out:  find = null";
-//              }
-//              cout << endl;
-//              freemem(root);
-//              getchar();
-//              getchar();
-
+              char word[MAXWORD];
+              char name[MAXWORD];
+              char grp[MAXWORD];
+              root = NULL;
+              cout<< "WORDS = 0 go end"<< endl;
+              cout<< "in: WORDS = "<< endl;
+              do {
+                inf *info = new inf;
+                cout<< "in: Fam Name Grp = ";
+                scanf("%s",word);
+                scanf("%s",name);
+                scanf("%s",grp);
+                info->Fam = word;
+                info->Name = name;
+                info->Grp = grp;
+                cout << endl;
+                if(word[0]) root = addtree(root, info);
+              }while(word[0]!='0');    // условие выхода – ввод символа ‘0’
+              cout << endl<< "out:  treeprint = "<< endl;
+              treeprint(root);
+              cout << endl<< "out:  treeprint_POSTFIX(LPK) = ";
+              treeprint_POSTFIX(root);
+              cout << endl<< "out:  treeprint_INFIX(LKP) = ";
+              treeprint_INFIX(root);
+              cout << endl<< "out:  treeprint_PREFIX(KLP) = ";
+              treeprint_PREFIX(root);
+              if(find(root,"q")) {
+              cout <<endl<< "out:  find = "<<find(root,"q")->pers->Fam;
+              }else {
+                cout <<endl<< "out:  find = null";
+              }
+              cout << endl;
+              char method[5]="";
+              while((strcmp(method,"exec")!= 0)&&(strcmp(method,"-e") != 0))
+              {
+                  cout << endl<<"Command: add(-a), find(-f), LPK(-p), LKP, KLP, exec(-e) ";
+                  cout << endl<< "in: method = ";
+                  scanf("%s",method);
+                  if((strcmp(method,"add") == 0)||(strcmp(method,"-a") == 0)){
+                      inf *info = new inf;
+                      cout<< "in: Fam Name Grp = ";
+                      scanf("%s",word);
+                      scanf("%s",name);
+                      scanf("%s",grp);
+                      info->Fam = word;
+                      info->Name = name;
+                      info->Grp = grp;
+                      cout << endl;
+                      root = addtree(root, info);
+                  }else if((strcmp(method,"find") == 0)||(strcmp(method,"-f") == 0)){
+                      scanf("%s",word);
+                      if(find(root,word)) {
+                      cout <<endl<< "out:  find = Fam: "<<find(root,word)->pers->Fam<<"name:"<< find(root,word)->pers->Name<<" grup:"<< find(root,word)->pers->Grp;
+                      }else {
+                        cout <<endl<< "out:  find = null";
+                      }
+                  }else if((strcmp(method,"LPK") == 0)||(strcmp(method,"-p") == 0)){
+                      cout << endl<< "out:  treeprint_INFIX(LKP) = "<< endl;
+                      treeprint_INFIX(root);
+                  }else if(strcmp(method,"LPK") == 0){
+                      cout << endl<< "out:  treeprint_POSTFIX(LPK) = "<< endl;
+                      treeprint_POSTFIX(root);
+                  }else if(strcmp(method,"LPK") == 0){
+                      cout << endl<< "out:  treeprint_PREFIX(KLP) = "<< endl;
+                      treeprint_PREFIX(root);
+                  }
+              }
+              cout << endl;
+              freemem(root);
         }
             break;
         default:

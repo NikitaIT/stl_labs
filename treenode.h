@@ -4,10 +4,12 @@
 #include <string.h>
 using namespace std;
 struct inf {
+    inf():Name("-"),Fam("-"),Grp("-"){
+    }
     inf(inf *i):Name(i->Name),Fam(i->Fam),Grp(i->Grp){}
-    char *Name;
-    char *Fam;
-    char *Grp;
+    string Name;
+    string Fam;
+    string Grp;
 };
 #define MAXWORD 100
 struct tnode {                // узел дерева
@@ -21,15 +23,15 @@ struct tnode *addtree(struct tnode *p, inf *pers) {
   int cond;
   if(p == NULL) {
     p = (struct tnode *)malloc(sizeof(struct tnode));
-    p->pers = new inf(pers);cout<<" pers";
+    p->pers = new inf(pers);/*cout<<"k";*/
     p->count = 1;
     p->left = p->right = NULL;
-  } else if((cond = strcmp(pers->Fam, p->pers->Fam)) == 0)
+  } else if((cond = strcmp(pers->Fam.c_str(),p->pers->Fam.c_str())) == 0)
   {p->count++;cout<<" count"<<pers->Fam<<" "<<p->pers->Fam;}
   else if(cond < 0){
-      p->left = addtree(p->left, pers);cout<<" left";
+      p->left = addtree(p->left, pers);/*cout<<"l";*/
   }else{
-      p->right = addtree(p->right, pers);cout<<" right";
+      p->right = addtree(p->right, pers);/*cout<<"r";*/
   }
   return p;
 }
@@ -45,14 +47,14 @@ void freemem(tnode *tree) {
 void treeprint(struct tnode *p) {
   if(p != NULL) {
     treeprint(p->left);
-    printf("%d %s\n", p->count, p->pers->Fam);
+    printf("%d %s\n", p->count, p->pers->Fam.c_str());
     treeprint(p->right);
   }
 }
 //При этом обход дерева в префиксной форме будет иметь вид
 void treeprint_PREFIX(tnode *tree) {
   if (tree!=NULL) { //Пока не встретится пустой узел
-    cout<<" "<<tree->count <<": " << tree->pers->Fam; //Отображаем корень дерева
+    cout<<"count: "<<tree->count <<" Fam: " << tree->pers->Fam<<" Name: " << tree->pers->Name<<" Grp: " << tree->pers->Grp<<endl; //Отображаем корень дерева
     treeprint_PREFIX(tree->left); //Рекурсивная функция для левого поддерева
     treeprint_PREFIX(tree->right); //Рекурсивная функция для правого поддерева
   }
@@ -61,7 +63,7 @@ void treeprint_PREFIX(tnode *tree) {
 void treeprint_INFIX(tnode *tree) {
   if (tree!=NULL) { //Пока не встретится пустой узел
     treeprint_INFIX(tree->left); //Рекурсивная функция для левого поддерева
-    cout <<" "<<tree->count <<": "<< tree->pers->Fam; //Отображаем корень дерева
+    cout<<"count: "<<tree->count <<" Fam: " << tree->pers->Fam<<" Name: " << tree->pers->Name<<" Grp: " << tree->pers->Grp<<endl; //Отображаем корень дерева
     treeprint_INFIX(tree->right); //Рекурсивная функция для правого поддерева
   }
 }
@@ -71,13 +73,13 @@ void treeprint_POSTFIX(tnode *tree) {
   if (tree!=NULL) { //Пока не встретится пустой узел
     treeprint_POSTFIX(tree->left); //Рекурсивная функция для левого поддерева
     treeprint_POSTFIX(tree->right); //Рекурсивная функция для правого поддерева
-    cout<<" "<<tree->count <<": " << tree->pers->Fam; //Отображаем корень дерева
+    cout<<"count: "<<tree->count <<" Fam: " << tree->pers->Fam<<" Name: " << tree->pers->Name<<" Grp: " << tree->pers->Grp<<endl; //Отображаем корень дерева
   }
 }
 
 tnode* find(tnode *r, char* d)
 {
-    int cond = strcmp(d, r->pers->Fam);
+    int cond = strcmp(d, r->pers->Fam.c_str());
 if (r==NULL)
    {
    return NULL;  // не найден
