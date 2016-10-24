@@ -81,7 +81,9 @@ int main()
             cout<< endl << "in: char_val[" << Nmy_list << "] = "<< endl;;
             for(int i=0;i<Nmy_list;i++)
             {
-                my_list.push_back((int)cin.get());
+                int q;
+                cin>>q;
+                my_list.push_back(q);
                 //my_list.console_log();
             }
             cout<< endl<< "out: NORMAL = ";
@@ -110,7 +112,9 @@ int main()
             cout<< endl<< "in: char_val[" << Nec_queue << "] = ";
             for(int i=0;i<Nec_queue;i++)
             {
-                c_queue.Enqueue((int)cin.get());
+                int w;
+                cin>>w;
+                c_queue.Enqueue(w);
             }
             cout<< "in: Enqueue = ";
             cin >> Enqueue;
